@@ -1,0 +1,19 @@
+{
+    "name": "Битрикс админка",
+    "description": "Ссылка на админку любого сайта на битриксе",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_icon": {
+            "16": "logo.png"
+        },
+        "default_title": "Open Bitrix Admin",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "tabs"
+    ]
+}
