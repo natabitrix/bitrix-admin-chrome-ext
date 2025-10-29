@@ -1,8 +1,36 @@
 
 /** Проверяет является ли файлом заданный путь */
-function isFilePath(path) {
+function isFilePath(input) {
     const fileExtensionPattern = /\.[a-zA-Z0-9]+$/;
-    return fileExtensionPattern.test(path);
+
+    let path = input;
+
+    // Если input похож на URL (содержит '://'), извлекаем параметр path
+    if (typeof input === 'string' && input.includes('://')) {
+        try {
+            const url = new URL(input);
+            path = url.searchParams.get('path');
+            if (path === null) return false;
+
+            // Декодируем URL-encoded путь (например, %2F -> /)
+            path = decodeURIComponent(path);
+        } catch (e) {
+            // Некорректный URL — не файл
+            return false;
+        }
+    }
+
+    // Убираем возможные ведущие слэши (например, "/local/..." → "local/...")
+    // Это не обязательно, но делает путь более "чистым"
+    const normalizedPath = path.startsWith('/') ? path.substring(1) : path;
+
+    // Проверяем, что путь не пустой и содержит расширение
+    if (!normalizedPath || !fileExtensionPattern.test(normalizedPath)) {
+        return false;
+    }
+
+    // Возвращаем нормализованный путь (без ведущего слэша)
+    return normalizedPath;
 }
 
 /** Проверяет является ли папкой заданный путь */
@@ -22,10 +50,15 @@ function openFileVSCodeLocalPath(inputString, localSite) {
         if (tabs.length > 0) {
             try {
                 if (isFilePath(inputString)) {
-                    // Заменяем обратные слеши на прямые
-                    let stringWithForwardSlashes = inputString.replace(/\\/g, '/');
+                    let inputFilePath = isFilePath(inputString);
 
-                    const filePath = `D:/OSPanel/home/${localSite}/public/${stringWithForwardSlashes}`;
+                    // Заменяем обратные слеши на прямые
+                    let stringWithForwardSlashes = inputFilePath.replace(/\\/g, '/');
+
+                    // const filePath = `D:/OSPanel/home/${localSite}/public/${stringWithForwardSlashes}`;
+                    const filePath = `D:/OSPanel_6.4.0_hydravia/hydravia/${localSite}/${stringWithForwardSlashes}`;
+
+                    // alert(filePath);
 
                     const vscodeUrl = `vscode://file/${filePath}`;
 
@@ -46,32 +79,38 @@ function openFileVSCodeLocalPath(inputString, localSite) {
 /**
  * Открывает текущий путь у заданного сайта
  * @param {*} inputString 
- * @param {*} otherSite 
+ * @param {*} needSite 
  */
-function openThisPageOnOtherSite(otherSite) {
+function openThisPageOnOtherSite(el) {
     // Получаем активную вкладку
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (tabs.length > 0) {
             const currentTab = tabs[0]; // Текущая активная вкладка
             const currentURL = currentTab.url; // URL текущей вкладки
-
             try {
                 // Разбираем URL, чтобы получить только доменное имя
+                const needSite = 'http://'+el.value;
+
                 const parsedURL = new URL(currentURL);
-                const baseURL = `${parsedURL.protocol}//${parsedURL.hostname}`;
-                const otherSiteUrl = `${parsedURL.protocol}//${otherSite}`;
+
+                const parsedFullURL = `${parsedURL.protocol}//${parsedURL.hostname}`;
+
+                const needURL = new URL(needSite);
+
+                const needFullUrl = `${needURL.protocol}//${needURL.hostname}`;
 
                 // Формируем новый URL
-                const newURL = currentURL.replace(baseURL, otherSiteUrl);
+                const newURL = currentURL.replace(parsedFullURL, needFullUrl);
                 const targetURL = newURL;
 
-                console.log("Opening URL:", targetURL);
+                el.setAttribute('title', targetURL);
 
-                // Открываем новую вкладку с изменённым адресом
-                chrome.tabs.create({ url: targetURL });
-
+                el.addEventListener("click", async () => {
+                    chrome.tabs.create({ url: targetURL });
+                });
+                
             } catch (error) {
-                console.error("Invalid URL:", currentURL);
+                console.error("error", error);
             }
         } else {
             console.error("No active tab found.");
@@ -114,6 +153,7 @@ function openBitrixMyFavorite(favorite) {
 /** Открывает урл вида [заданный в текстовом поле путь в админке текущего сайта]:
  *  Текущий сайт/bitrix/admin/fileman_admin.php?path= либо 
  *  Текущий сайт/bitrix/admin/fileman_file_edit.php?path=  
+ * 
  */
 document.getElementById("bitrix_path_btn").addEventListener("click", async () => {
 
@@ -132,6 +172,7 @@ document.getElementById("bitrix_path_btn").addEventListener("click", async () =>
                 // Заданный урл
                 let inputString = document.getElementById("bitrix_path").value;
                 inputString = inputString.replace("D:\\OSPanel\\home\\hydravia.ru.loc\\public\\", "");
+                inputString = inputString.replace("D:\\OSPanel_6.4.0_hydravia\\hydravia\\hydravia.ru.loc\\", "");
 
                 // Заменяем обратные слеши на прямые
                 let stringWithForwardSlashes = inputString.replace(/\\/g, '/');
@@ -183,9 +224,7 @@ Array.prototype.forEach.call(document.querySelectorAll('.bitrix_my_favorite'), e
 
 /** Вешаем на каждую кнопку класса .open_other_site функцию окрытия по кнопке */
 Array.prototype.forEach.call(document.querySelectorAll('.open_other_site'), el => {
-    el.addEventListener("click", async () => {
-        openThisPageOnOtherSite(el.value);
-    });
+    openThisPageOnOtherSite(el);
 });
 
 /** Вешаем на каждую кнопку класса .bitrix_path_local_btn функцию открытия файла в VSCode */
@@ -195,3 +234,49 @@ Array.prototype.forEach.call(document.querySelectorAll('.bitrix_path_local_btn')
         openFileVSCodeLocalPath(inputString, el.value);
     });
 });
+
+
+document.querySelectorAll(".command input").forEach(function(inp) {
+    inp.addEventListener("click", async () => {
+        inp.select();
+    });
+});
+
+
+function setButtonTitle(el) {
+    // Получаем активную вкладку
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length > 0) {
+            const currentTab = tabs[0]; // Текущая активная вкладка
+            const currentURL = currentTab.url; // URL текущей вкладки
+
+            
+
+
+
+            try {
+                
+
+                // Разбираем URL, чтобы получить только доменное имя
+                const needSite = el.value;
+                const parsedURL = new URL(currentURL);
+                const baseURL = `${parsedURL.protocol}//${parsedURL.hostname}`;
+                const otherSiteUrl = `${parsedURL.protocol}//${needSite}`;
+
+                
+
+                // Формируем новый URL
+                const newURL = currentURL.replace(baseURL, otherSiteUrl);
+                const targetURL = newURL;
+
+                el.setAttribute('title', targetURL);
+                
+
+            } catch (error) {
+                console.error("Invalid URL:", currentURL);
+            }
+        } else {
+            console.error("No active tab found.");
+        }
+    });
+}

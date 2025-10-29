@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>Popup</title>
     <meta charset="UTF-8">
@@ -9,19 +10,19 @@
             padding: 5px 10px;
             /* min-width: 300px; */
             /* max-width: 300px; */
-            width: 290px;
+            width: 350px;
             border-radius: 4px;
             overflow: hidden;
-            background-color: rgb(64, 64, 64);
-            color: white;
+            background-color: rgb(49, 49, 49);
+            color: rgb(225, 225, 225);
             font-size: 12px;
         }
 
         .btn {
             border-radius: 4px;
             border: none;
-            background: rgb(101, 101, 101);
-            color: white;
+            background: rgb(66, 66, 66);
+            color: rgb(199, 199, 199);
             margin: 5px 0;
             padding: 5px 7px;
             width: 100%;
@@ -33,7 +34,8 @@
             text-shadow: 0 0 1px black;
         }
 
-        .btn img, .icon {
+        .btn img,
+        .icon {
             width: 12px;
             height: 12px;
             margin-right: 5px;
@@ -48,30 +50,15 @@
             display: flex;
             align-items: center;
             width: 100%;
-            gap:5px;
-            margin-bottom:5px;
+            gap: 5px;
+            margin-bottom: 5px;
         }
-        .container > .btn{
+
+        .container>.btn {
             margin: 0;
         }
-        .text-field {
-            border-radius: 4px;
-            border: 1px solid rgb(50, 50, 50);
-            background-color: rgb(79, 79, 79);
-            margin: 0;
-            color: rgb(180, 180, 180);
-            padding: 5px 7px;
-            display: block;
-            width: 100%;
-            word-break: break-all; 
-            overflow-wrap: break-word; 
-            overflow: hidden;
-            font-size: 12px;
-        }
-        .container .text-field {
-            flex-grow: 1;
-            width: auto;
-        }
+
+
         .text-field:focus,
         .text-field:focus-visible,
         .text-field:active {
@@ -84,77 +71,162 @@
             text-align: center;
             font-size: 10px;
         }
+
         .btn.sm img {
             margin: 0;
         }
-        h3{
+
+        h3 {
             color: rgb(114, 114, 114);
             margin: 8px 0 2px;
             font-weight: 500;
             display: flex;
             align-items: baseline;
         }
+
         h3 span {
             flex-grow: 1;
             width: auto;
         }
+
         h3 img {
             width: 16px;
             height: 16px;
             margin-right: 5px;
         }
+
         .mr-5 {
             margin-right: 5px;
         }
+        hr {
+            border-color: #666;
+        }
+
+
+        .text-field  {
+            border-radius: 4px;
+            border: 1px solid rgb(50, 50, 50);
+            background-color: rgb(36, 36, 36);
+            margin: 0;
+            color: rgb(180, 180, 180);
+            padding: 5px 7px;
+            display: block;
+            width: 100%;
+            word-break: break-all;
+            overflow-wrap: break-word;
+            overflow: hidden;
+            font-size: 12px;
+        }
+
+        .container .text-field {
+            flex-grow: 1;
+            width: auto;
+        }
+
     </style>
 </head>
 
 <body>
-    
+
 
     <div class="container">
+        <button class="btn bitrix_my_favorite"
+            value="/bitrix/admin/fileman_admin.php?lang=ru&&path=%2Flocal%2Fphp_interface&noinit=Y">noinit</button>
+        <button class="btn bitrix_my_favorite"
+            value="/bitrix/admin/cache.php?lang=ru&cachetype=all&tabControl_active_tab=fedit2">cache</button>
         <button class="btn bitrix_my_favorite" value="/bitrix/admin/"><img src="icons/logo.png">Aдминка</button>
-        <button class="btn bitrix_my_favorite" value="/bitrix/admin/cache.php?lang=ru&cachetype=all&tabControl_active_tab=fedit2">cache</button>
-        <button class="btn bitrix_my_favorite" value="/bitrix/admin/fileman_admin.php?lang=ru&&path=%2Flocal%2Ftemplates">templates</button>
     </div>
     <div class="container">
-        <button class="btn bitrix_my_favorite" value="/bitrix/admin/fileman_admin.php?lang=ru&&path=%2Flocal%2Fphp_interface&noinit=Y">noinit</button>
-        <button class="btn bitrix_my_favorite" value="/bitrix/admin/composite.php">композит</button>
+        <button class="btn bitrix_my_favorite"
+            value="/bitrix/admin/fileman_admin.php?lang=ru&path=%2Flocal%2Ftemplates">local/templates</button>
+        <button class="btn bitrix_my_favorite"
+            value="/bitrix/admin/fileman_admin.php?lang=ru&path=%2Fbitrix%2Ftemplatess">bitrix/templates</button>
         <button class="btn bitrix_my_favorite" value="/bitrix/admin/urlrewrite_list.php">url_rewrite</button>
+
+    </div>
+    <div class="container">
+
+        <button class="btn bitrix_my_favorite"
+            value="/bitrix/admin/security_iprule_admin.php?lang=ru">sec.iprule</button>
+        <button class="btn bitrix_my_favorite" value="/bitrix/admin/php_command_line.php?lang=ru">php_cmd</button>
+        <button class="btn bitrix_my_favorite" value="/bitrix/admin/composite.php">composite</button>
+        <button class="btn bitrix_my_favorite"
+            value="/bitrix/admin/update_system_partner.php?addmodule=twoidigital.yandexcaptcha">y.captcha</button>
+
         <!-- <button class="btn bitrix_my_favorite" value="/bitrix/admin/fileman_file_edit.php?path=%2Flocal%2Fphp_interface%2Fadmin_header.php&full_src=Y">admin_header</button> -->
     </div>
 
-    <h3>Открыть текущий путь в:</h4>
+    <h3>Открыть текущий путь в:</h3>
 
+    <!-- hydravia -->
     <div class="container">
-        <button class="btn open_other_site" value="hydravia.ru"><img src="https://hydravia.ru/favicon.ico">hydravia.ru</button>
-        <button class="btn open_other_site" value="hydravia.ru.loc"><img src="icons/hdd.svg">hydravia.ru.loc</button>
-        <button class="btn open_other_site" value="twoidigital.ru"><img src="icons/code-slash.svg">twoidigital.ru</button>
+        <button class="btn open_other_site" value="hydravia.ru.loc"><img 
+                src="icons/hdd.svg">hydravia.ru.loc</button>
+        <button class="btn open_other_site" value="twoidigital.ru"><img
+                src="icons/code-slash.svg">twoidigital.ru</button>
+        <button class="btn open_other_site" value="hydravia.ru"><img
+                src="https://hydravia.ru/favicon.ico">hydravia.ru</button>
+
+
     </div>
     <div class="container">
-        <button class="btn open_other_site" value="hydravia.kz"><img src="https://hydravia.kz/favicon.ico">hydravia.kz</button>
-        <button class="btn open_other_site" value="hydravia.by"><img src="https://hydravia.kz/favicon.ico">hydravia.by</button>
-        <button class="btn open_other_site" value="hydravia.com"><img src="https://hydravia.kz/favicon.ico">hydravia.com</button>
+        <button class="btn open_other_site" value="hydravia.kz"><img
+                src="https://hydravia.kz/favicon.ico">hydravia.kz</button>
+        <button class="btn open_other_site" value="hydravia.by"><img
+                src="https://hydravia.kz/favicon.ico">hydravia.by</button>
+        <button class="btn open_other_site" value="hydravia.com"><img
+                src="https://hydravia.kz/favicon.ico">hydravia.com</button>
     </div>
-    
-    <!-- <button class="btn open_other_site" value="hydravia.ru"><img src="https://hydravia.ru/favicon.ico">hydravia.ru</button>
-    <button class="btn open_other_site" value="hydravia.kz"><img src="https://hydravia.kz/favicon.ico">hydravia.kz</button>
-    <button class="btn open_other_site" value="hydravia.by"><img src="https://hydravia.kz/favicon.ico">hydravia.by</button>
-    <button class="btn open_other_site" value="hydravia.com"><img src="https://hydravia.kz/favicon.ico">hydravia.com</button>
-    <button class="btn open_other_site" value="hydravia.ru.loc"><img src="https://hydravia.ru/favicon.ico"><img src="icons/hdd.svg">hydravia.ru.loc</button>
-    <button class="btn open_other_site" value="twoidigital.ru"><img src="https://hydravia.ru/favicon.ico"><img src="icons/code-slash.svg">twoidigital.ru</button> -->
+    <div class="container">
+        <button class="btn open_other_site" value="hydral.ru"><img
+                src="https://hydral.ru/favicon.ico">hydral.ru</button>
+        <button class="btn open_other_site" value="versohydraulic.com"><img
+                src="https://versohydraulic.com/favicon.ico">versohydraulic.com</button>
+    </div>
+    <div class="container">
+        <button class="btn open_other_site" value="uhc-group.com"><img
+                src="https://uhc-group.com/favicon.png">uhc-group.com</button>
+        <button class="btn open_other_site" value="mypowermaster.com"><img
+                src="https://mypowermaster.com/favicon.ico">mypowermaster.com</button>
+    </div>
 
     <div class="container">
-        <button class="btn open_other_site" value="jonas-spb.com"><img src="https://jonas-spb.com/favicon.ico">jonas-spb.com</button>
+        <button class="btn open_other_site" value="промрукава.рф"><img
+                src="https://промрукава.рф/favicon.png">промрукава.рф</button>
+        <button class="btn open_other_site" value="h-point.org"><img
+                src="https://h-point.org/favicon.ico">h-point.org</button>
+    </div>
+
+    <hr>
+
+    <!-- jonas -->
+    <div class="container">
+        <button class="btn open_other_site" value="jonas-spb.com"><img
+                src="https://jonas-spb.com/favicon.ico">jonas-spb.com</button>
         <button class="btn open_other_site" value="twoi-jonas.ru"><img src="icons/code-slash.svg">twoi-jonas.ru</button>
     </div>
 
+    <hr>
+
+    <!-- wht -->
     <div class="container">
-        <button class="btn open_other_site" value="wht.ru"><img src="https://wht.ru/favicon.svg">wht.ru</button>
-        <button class="btn open_other_site" value="twoi-wht.ru"><img src="icons/code-slash.svg">twoi-wht.ru</button>
+        <button class="btn open_other_site" value="wht.ru"><img src="https://wht.ru/favicon.svg">wht</button>
+        <button class="btn open_other_site" value="twoi-wht.ru"><img src="icons/code-slash.svg">twoi-wht</button>
+        <button class="btn open_other_site" value="twoi-mainproject.ru"><img
+                src="icons/code-slash.svg">twoi-mainpr</button>
     </div>
 
-    <h3><span>Открыть заданный путь:</span> <button class="btn sm" id="parse_path" style="margin-bottom: 0;" title="Спарсить путь"><img src="icons/box-arrow-in-down-left.svg"></button></h4>
+    <hr>
+
+    <!-- guion -->
+    <div class="container">
+        <button class="btn open_other_site" value="guion.loc"><img src="icons/code-slash.svg">guion.loc</button>
+        <button class="btn open_other_site" value="twoi-piter.ru">guion = twoi-piter.ru</button>
+    </div>
+
+    <h3><span>Открыть заданный путь:</span><button class="btn sm" id="parse_path" style="margin-bottom: 0;"
+            title="Спарсить путь"><img src="icons/box-arrow-in-down-left.svg"></button>
+    </h3>
 
     <div class="container">
         <textarea class="text-field" id="bitrix_path" placeholder="Путь к файлу или папке"></textarea>
@@ -162,10 +234,11 @@
 
     <button class="btn" id="bitrix_path_btn"><img src="icons/logo.png">в админке текущего сайта</button>
 
+    <button class="btn bitrix_path_local_btn" value="hydravia.ru.loc"><img src="icons/vscode.svg">локально в
+        hydravia.ru.loc</button>
 
-    <button class="btn bitrix_path_local_btn" value="hydravia.ru.loc"><img src="icons/vscode.svg">локально в hydravia.ru.loc</button>
 
-    
+
 
     <script src="popup.js"></script>
 </body>
